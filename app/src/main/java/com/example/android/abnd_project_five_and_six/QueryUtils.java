@@ -153,10 +153,10 @@ public final class QueryUtils {
             JSONObject baseJsonResponse = new JSONObject(newsJSON);
 
             // Extract the JSONArray associated with the key called "features",
-            // which represents a list of features (or earthquakes).
-            JSONArray newsArray = baseJsonResponse.getJSONArray("features");
+            // which represents a list of news.
+            JSONArray newsArray = baseJsonResponse.getJSONArray("results");
 
-            // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
+            // For each  News in the NewsArray, create a News object
             for (int i = 0; i < newsArray.length(); i++) {
 
                 // Get a single earthquake at position i within the list of earthquakes
