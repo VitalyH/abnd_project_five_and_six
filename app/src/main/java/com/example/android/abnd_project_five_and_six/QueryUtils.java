@@ -1,13 +1,10 @@
 package com.example.android.abnd_project_five_and_six;
 
-import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,9 +27,8 @@ public final class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
-     * Create a private constructor because no one should ever create a {@link QueryUtils} object.
-     * This class is only meant to hold static variables and methods, which can be accessed
-     * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
+     * Create a private constructor - class where we can hold static variables and methods.
+     * They may be accessed directly from the class name QueryUtils.
      */
     private QueryUtils() {
     }
@@ -144,9 +140,9 @@ public final class QueryUtils {
         // Create an empty ArrayList that we can start adding news to
         List<News> newsList = new ArrayList<>();
 
-        // Try to parse the JSON response string. If there's a problem with the way the JSON
-        // is formatted, a JSONException exception object will be thrown.
-        // Catch the exception so the app doesn't crash, and print the error message to the logs.
+        // Try to parse the JSON response string. If there's a problem, a JSONException
+        // exception object will be thrown.
+        // Catch the exception so the app doesn't crash and print the error message to the logs.
         try {
 
             // Create a JSONObject from the JSON response string
@@ -191,8 +187,7 @@ public final class QueryUtils {
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
-            // catch the exception here, so the app doesn't crash. Print a log message
-            // with the message from the exception.
+            // catch the exception, so the app doesn't crash. Print a log message.
             Log.e("QueryUtils", "Problem parsing the news JSON results", e);
         }
 

@@ -23,8 +23,6 @@ import java.util.List;
 
 public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
-    private static final String LOG_TAG = NewsActivity.class.getName();
-
     /**
      * URL for news data from the The Guardian.
      * All additional queries are in the onCreateLoader method.
@@ -33,13 +31,12 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             "https://content.guardianapis.com/search?q";
 
     /**
-     * Constant value for the news loader ID. We can choose any integer.
-     * This really only comes into play if you're using multiple loaders.
+     * Constant value for the news loader ID.
      */
     private static final int NEWS_LOADER_ID = 1;
 
     /**
-     * Adapter for the list of news
+     * Adapter for the list of news.
      */
     private NewsAdapter mAdapter;
 
@@ -66,15 +63,14 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // so the list can be populated in the user interface
         newsListView.setAdapter(mAdapter);
 
-        // Set an item click listener on the ListView, which sends an intent to a web browser
-        // to open a website with more information about the selected news.
+        // Set an item click listener on the ListView, which sends an intent to a web browser.
         newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // Find the current news that was clicked on
+                // Find the current news.
                 News currentNews = mAdapter.getItem(position);
 
-                // Convert the String URL into a URI object (to pass into the Intent constructor)
+                // Convert the String URL into a URI object.
                 Uri newsUri = Uri.parse(currentNews.getUrl());
 
                 // Create a new intent to view the news URI
@@ -97,9 +93,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             // Get a reference to the LoaderManager, in order to interact with loaders.
             LoaderManager loaderManager = getLoaderManager();
 
-            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-            // because this activity implements the LoaderCallbacks interface).
+            // Initialize the loader.
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
         } else {
             // Otherwise, display error
@@ -138,8 +132,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // Clear the adapter of previous data
         mAdapter.clear();
 
-        // If there is a valid list of News, then add them to the adapter's
-        // data set. This will trigger the ListView to update.
+        // If there is a valid list of News, then add them to the adapter's data set
         if (news != null && !news.isEmpty()) {
             mAdapter.addAll(news);
         }

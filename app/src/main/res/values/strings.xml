@@ -2,4 +2,6 @@
     <string name="app_name">News App</string>
     <string name="no_internet_connection">No internet connection.</string>
     <string name="no_news">No news found.</string>
+    <string name="date_time_separator">", "</string>
+    <string name="news_list_author_tag">by</string>
 </resources>

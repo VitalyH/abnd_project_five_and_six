@@ -8,4 +8,31 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NewsListTopViews">
+        <item name="android:paddingStart">@dimen/small_padding</item>
+        <item name="android:paddingEnd">@dimen/small_padding</item>
+        <item name="android:paddingTop">@dimen/small_padding</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="NewsListTitle">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:padding">@dimen/small_padding</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NewsListAuthorTag">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:paddingStart">@dimen/small_padding</item>
+        <item name="android:paddingBottom">@dimen/small_padding</item>
+        <item name="android:paddingEnd">@dimen/extra_small_padding</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="NewsListAuthor">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:paddingBottom">@dimen/small_padding</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 </resources>

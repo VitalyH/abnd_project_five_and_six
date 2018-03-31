@@ -1,7 +1,6 @@
 package com.example.android.abnd_project_five_and_six;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,9 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * An {@link NewsAdapter} knows how to create a list item layout for each news
- * in the data source (a list of {@link News} objects).
- * <p>
- * These list item layouts will be provided to an adapter view like ListView
- * to be displayed to the user.
+ * An {@link NewsAdapter} knows how to create a list item layout for each "piece" of news
+ * a list of {@link News} objects).
+ * These list item layouts will be provided to an adapter
  */
 
 public class NewsAdapter extends ArrayAdapter<News> {
@@ -25,7 +22,6 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
     /**
      * Constructs a new {@link NewsAdapter}.
-     *
      * @param context of the app
      * @param news    is the list of news, which is the data source of the adapter
      */
@@ -38,7 +34,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Check if there is an existing list item view (called convertView) that we can reuse,
+        // Check if there is an existing list item view that we can reuse,
         // otherwise, if convertView is null, then inflate a new list item layout.
         View listItemView = convertView;
         if (listItemView == null) {
@@ -49,15 +45,19 @@ public class NewsAdapter extends ArrayAdapter<News> {
         // Find the news piece at the given position in the list of news
         News currentNews = getItem(position);
 
-        // Find the TextView with view ID section
+        // Find the TextView with view ID news_section
         TextView sectionView = listItemView.findViewById(R.id.news_section);
         // Display the section of the current news in that TextView
         sectionView.setText(currentNews.getNewsSection());
 
+        // Find the TextView with view ID news_title
         TextView titleView = listItemView.findViewById(R.id.news_title);
+        // Display the title of the current news in that TextView
         titleView.setText(currentNews.getNewsTitle());
 
+        // Find the TextView with view ID news_author
         TextView authorView = listItemView.findViewById(R.id.news_author);
+        // Display the author of the news in that TextView
         authorView.setText(currentNews.getNewsAuthor());
 
         // Handle the date
@@ -81,10 +81,8 @@ public class NewsAdapter extends ArrayAdapter<News> {
         // Find the TextView with view ID location
         TextView dateView = listItemView.findViewById(R.id.news_date);
         // Display the date and time and "," between them
-        dateView.setText(dateOffset + ", " + timeOffset);
-
-//        TextView dateView = listItemView.findViewById(R.id.news_date);
-//        dateView.setText(currentNews.getNewsDate());
+        String dateTimeWithSeparator = dateOffset + getContext().getString(R.string.date_time_separator) + timeOffset;
+        dateView.setText(dateTimeWithSeparator);
 
         return listItemView;
     }

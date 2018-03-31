@@ -30,7 +30,6 @@ public class News {
      */
     private String mUrl;
 
-
     /**
      * Constructs a new {@link News} object.
      *

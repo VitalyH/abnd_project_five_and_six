@@ -1,53 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list_item_text_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/list_item_height"    >
+    android:minHeight="@dimen/list_item_height">
 
-     <TextView
-            android:id="@+id/news_title"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
+    <!-- Section name, top left corner -->
+    <TextView
+        android:id="@+id/news_section"
+        style="@style/NewsListTopViews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-            android:textSize="16sp"
-         android:textStyle="bold"
-         android:padding="8dp"
-             />
-
-
-     <LinearLayout
-         android:layout_toEndOf="@+id/news_title"
+    <!-- Date, top right corner  -->
+    <TextView
+        android:id="@+id/news_date"
+        style="@style/NewsListTopViews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
 
-        <TextView
-            android:id="@+id/news_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textSize="12sp"
-            tools:text="Mar 28, 2018" />
+    <!-- News title, in the middle -->
+    <TextView
+        android:id="@+id/news_title"
+        style="@style/NewsListTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/news_section" />
 
-        <TextView
-            android:id="@+id/news_section"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textSize="12sp"
-            tools:text="John Smith" />
+    <!-- Small author tag "by" -->
+    <TextView
+        android:id="@+id/news_author_tag"
+        style="@style/NewsListAuthorTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/news_title"
+        android:text="@string/news_list_author_tag" />
 
-        <TextView
-            android:id="@+id/news_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textSize="12sp"
-            tools:text="John Smith" />
-
-    </LinearLayout>
+    <!-- Name of the author-->
+    <TextView
+        android:id="@+id/news_author"
+        style="@style/NewsListAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/news_title"
+        android:layout_toEndOf="@+id/news_author_tag" />
 </RelativeLayout>
