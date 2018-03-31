@@ -29,7 +29,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
      * URL for news data from the The Guardian
      */
     private static final String GUARDIAN_REQUEST_URL =
-            "https://content.guardianapis.com/search?q&api-key=test";
+            "https://content.guardianapis.com/search?q";
 
     /**
      * Constant value for the news loader ID. We can choose any integer.
@@ -113,8 +113,17 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
+        // Variables for future app settings
+        String pageSize = getString(R.string.page_size_default);
+        // Uri.builder constructor
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
+        // Additional and custom (via future settings) query parameters
+        uriBuilder.appendQueryParameter("api-key", "test");
+        uriBuilder.appendQueryParameter("order-by", "newest");
+        uriBuilder.appendQueryParameter("show-fields", "byline");
+        uriBuilder.appendQueryParameter("pageSize", pageSize);
+
         return new NewsLoader(this, uriBuilder.toString());
     }
 

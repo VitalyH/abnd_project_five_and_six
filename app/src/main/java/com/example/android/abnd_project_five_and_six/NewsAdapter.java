@@ -22,15 +22,14 @@ public class NewsAdapter extends ArrayAdapter<News> {
      * Constructs a new {@link NewsAdapter}.
      *
      * @param context of the app
-     * @param news is the list of earthquakes, which is the data source of the adapter
+     * @param news is the list of news, which is the data source of the adapter
      */
     public NewsAdapter(Context context, List<News> news) {
         super(context, 0, news);
     }
 
     /**
-     * Returns a list item view that displays information about the earthquake at the given position
-     * in the list of earthquakes.
+     * Returns a list item view that displays information about the news at the given position in the list
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

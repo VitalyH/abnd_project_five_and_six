@@ -1,5 +1,6 @@
 package com.example.android.abnd_project_five_and_six;
 
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -23,7 +24,9 @@ import java.util.List;
  */
 public final class QueryUtils {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
@@ -48,12 +51,9 @@ public final class QueryUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
-
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        List<News> newsS = extractFeatureFromJson(jsonResponse);
-
-        // Return the list of {@link Earthquake}s
-        return newsS;
+        // Extract relevant fields from the JSON response and
+        // return the list of News
+        return extractFeatureFromJson(jsonResponse);
     }
 
     /**
@@ -142,7 +142,7 @@ public final class QueryUtils {
         }
 
         // Create an empty ArrayList that we can start adding news to
-        List<News> newsS = new ArrayList<>();
+        List<News> newsList = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -150,40 +150,43 @@ public final class QueryUtils {
         try {
 
             // Create a JSONObject from the JSON response string
-            JSONObject baseJsonResponse = new JSONObject(newsJSON);
+            JSONObject guardianJsonResponse = new JSONObject(newsJSON);
 
-            // Extract the JSONArray associated with the key called "features",
-            // which represents a list of news.
-            JSONArray newsArray = baseJsonResponse.getJSONObject("response").getJSONArray("results");
+            // Extract the JSONArray "results" which is within the JSONObject "response"
+            JSONArray newsArray = guardianJsonResponse.getJSONObject("response").getJSONArray("results");
 
-
-            // For each  News in the NewsArray, create a News object
+            // For each News in the NewsArray, create a News object
             for (int i = 0; i < newsArray.length(); i++) {
 
-                // Get a single earthquake at position i within the list of earthquakes
+                // Get a single news at position i within the list of "news pieces"
                 JSONObject currentNews = newsArray.getJSONObject(i);
 
-                // Extract the value for the key called "sectionName"
+                // Extract the section name
                 String section = currentNews.getString("sectionName");
 
-                // Extract the value for the key called webTitle"
+                // Extract the title of article
                 String title = currentNews.getString("webTitle");
 
-                // Extract the value for the key called "time"
-             //   String author = content.getString("contributor");
-
-                // Extract the value for the key called "date"
+                // Extract the name of the author
+                String author = "";
+                // News may not have author - checking
+                if (currentNews.has("fields")) {
+                    JSONObject myObject = currentNews.getJSONObject("fields");
+                    // Extract the author of the current news
+                    author = myObject.getString("byline");
+                }
+                // Extract the date of news
                 String date = currentNews.getString("webPublicationDate");
 
-                // Extract the value for the key called "webUrl"
+                // Extract the URL mews
                 String url = currentNews.getString("webUrl");
 
-                // Create a new {@link News} object.
-                // News newsS = new News(section, title, author, date, url);
-                News news = new News(section, title, date, url);
+                // Create a new News object.
+                News news = new News(section, title, author, date, url);
+                // News news = new News(section, title, date, url);
 
                 // Add the new News object to the list of news.
-                newsS.add(news);
+                newsList.add(news);
             }
 
         } catch (JSONException e) {
@@ -194,7 +197,6 @@ public final class QueryUtils {
         }
 
         // Return the list of news
-        return newsS;
+        return newsList;
     }
-
 }
