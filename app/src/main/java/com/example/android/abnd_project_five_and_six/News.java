@@ -39,10 +39,10 @@ public class News {
      * @param date    is the news date
      * @param url     is the website URL to the news
      */
-    public News(String section, String title, String author, String date, String url) {
+    public News(String section, String title, String date, String url) {
         mSection = section;
         mTitle = title;
-        mAuthor = author;
+      //  mAuthor = author;
         mDate = date;
         mUrl = url;
     }

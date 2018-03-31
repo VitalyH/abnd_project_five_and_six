@@ -115,13 +115,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-
-        //uriBuilder.appendQueryParameter("format", "geojson");
-//        uriBuilder.appendQueryParameter("limit", "10");
-//        uriBuilder.appendQueryParameter("news_section", section);
-//        uriBuilder.appendQueryParameter("minmag", minMagnitude);
-//        uriBuilder.appendQueryParameter("orderby", orderBy);
-
         return new NewsLoader(this, uriBuilder.toString());
     }
 
@@ -134,7 +127,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // Set empty state text to display "No news found."
         mEmptyStateTextView.setText(R.string.no_news);
 
-        // Clear the adapter of previous earthquake data
+        // Clear the adapter of previous data
         mAdapter.clear();
 
         // If there is a valid list of News, then add them to the adapter's

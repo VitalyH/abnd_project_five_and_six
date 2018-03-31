@@ -50,10 +50,10 @@ public final class QueryUtils {
         }
 
         // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        List<News> news = extractFeatureFromJson(jsonResponse);
+        List<News> newsS = extractFeatureFromJson(jsonResponse);
 
         // Return the list of {@link Earthquake}s
-        return news;
+        return newsS;
     }
 
     /**
@@ -141,8 +141,8 @@ public final class QueryUtils {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding earthquakes to
-        List<News> news = new ArrayList<>();
+        // Create an empty ArrayList that we can start adding news to
+        List<News> newsS = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -154,18 +154,14 @@ public final class QueryUtils {
 
             // Extract the JSONArray associated with the key called "features",
             // which represents a list of news.
-            JSONArray newsArray = baseJsonResponse.getJSONArray("results");
+            JSONArray newsArray = baseJsonResponse.getJSONObject("response").getJSONArray("results");
+
 
             // For each  News in the NewsArray, create a News object
             for (int i = 0; i < newsArray.length(); i++) {
 
                 // Get a single earthquake at position i within the list of earthquakes
                 JSONObject currentNews = newsArray.getJSONObject(i);
-
-                // For a given earthquake, extract the JSONObject associated with the
-                // key called "properties", which represents a list of all properties
-                // for that earthquake.
-               // JSONObject properties = currentNews.getJSONObject("properties");
 
                 // Extract the value for the key called "sectionName"
                 String section = currentNews.getString("sectionName");
@@ -174,30 +170,31 @@ public final class QueryUtils {
                 String title = currentNews.getString("webTitle");
 
                 // Extract the value for the key called "time"
-                String author = currentNews.getString("contributor");
+             //   String author = content.getString("contributor");
 
                 // Extract the value for the key called "date"
-                String date = currentNews.getString("published");
+                String date = currentNews.getString("webPublicationDate");
 
                 // Extract the value for the key called "webUrl"
                 String url = currentNews.getString("webUrl");
 
                 // Create a new {@link News} object.
-                News newsS = new News(section, title, author, date, url);
+                // News newsS = new News(section, title, author, date, url);
+                News news = new News(section, title, date, url);
 
                 // Add the new News object to the list of news.
-                news.add(newsS);
+                newsS.add(news);
             }
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the news JSON results", e);
         }
 
         // Return the list of news
-        return news;
+        return newsS;
     }
 
 }
