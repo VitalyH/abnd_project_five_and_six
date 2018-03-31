@@ -26,7 +26,8 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String LOG_TAG = NewsActivity.class.getName();
 
     /**
-     * URL for news data from the The Guardian
+     * URL for news data from the The Guardian.
+     * All additional queries are in the onCreateLoader method.
      */
     private static final String GUARDIAN_REQUEST_URL =
             "https://content.guardianapis.com/search?q";
@@ -102,7 +103,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
             loaderManager.initLoader(NEWS_LOADER_ID, null, this);
         } else {
             // Otherwise, display error
-            // First, hide loading indicator so error message will be visible
+            // Hide loading indicator so error message will be visible
             View loadingIndicator = findViewById(R.id.loading_indicator);
             loadingIndicator.setVisibility(View.GONE);
 
@@ -113,16 +114,14 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        // Variables for future app settings
-        String pageSize = getString(R.string.page_size_default);
-        // Uri.builder constructor
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
-        // Additional and custom (via future settings) query parameters
-        uriBuilder.appendQueryParameter("api-key", "test");
+        // Additional query parameters.
+        // May allow users to customize them via Settings in the next task
+        uriBuilder.appendQueryParameter("api-key", "180f2602-4726-43d6-bf1e-55256d6ccbc8");
         uriBuilder.appendQueryParameter("order-by", "newest");
         uriBuilder.appendQueryParameter("show-fields", "byline");
-        uriBuilder.appendQueryParameter("pageSize", pageSize);
+        uriBuilder.appendQueryParameter("page-size", "20");
 
         return new NewsLoader(this, uriBuilder.toString());
     }
@@ -143,7 +142,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // data set. This will trigger the ListView to update.
         if (news != null && !news.isEmpty()) {
             mAdapter.addAll(news);
-            //     updateUi(news);
         }
     }
 
@@ -152,5 +150,4 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
     }
-
 }

@@ -1,6 +1,7 @@
 package com.example.android.abnd_project_five_and_six;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,9 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
         TextView authorView = listItemView.findViewById(R.id.news_author);
         authorView.setText(currentNews.getNewsAuthor());
+
+       // View textContainer = listItemView.findViewById(R.id.list_item_text_container);
+       // textContainer.setBackgroundColor(0xFF00FF00);
 
         return listItemView;
     }

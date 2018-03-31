@@ -30,6 +30,7 @@ public class News {
      */
     private String mUrl;
 
+
     /**
      * Constructs a new {@link News} object.
      *
@@ -44,7 +45,7 @@ public class News {
         mTitle = title;
         mAuthor = author;
         mDate = date;
-        mUrl = url;
+           mUrl = url;
     }
 
     /**

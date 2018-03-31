@@ -169,7 +169,7 @@ public final class QueryUtils {
 
                 // Extract the name of the author
                 String author = "";
-                // News may not have author - checking
+                // News may not have additional fields - checking
                 if (currentNews.has("fields")) {
                     JSONObject myObject = currentNews.getJSONObject("fields");
                     // Extract the author of the current news
