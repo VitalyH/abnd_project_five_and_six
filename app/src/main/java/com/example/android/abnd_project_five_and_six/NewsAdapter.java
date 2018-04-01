@@ -71,7 +71,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
             holder.authorView = listItemView.findViewById(R.id.news_author);
             holder.authorView.setText(currentNews.getNewsAuthor());
 
-            // Variables for the date conversion
+            // Variables for the Date field transformation.
             String originalDate = currentNews.getNewsDate();
             String dateOffset = "";
             String dateLeftover;
@@ -84,6 +84,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
                 String[] date = originalDate.split(DATE_SEPARATOR);
                 dateOffset = date[0];
                 dateLeftover = date[1];
+
                 // Do the same with "leftover" of date, which contains time and separator "Z"
                 String[] time = dateLeftover.split(TIME_SEPARATOR);
                 timeOffset = time[0];
@@ -91,6 +92,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
             // Find the TextView with view ID location
             holder.dateView = listItemView.findViewById(R.id.news_date);
+
             // Display the date and time and "," between them
             String dateTimeWithSeparator = dateOffset + getContext().getString(R.string.date_time_separator) + timeOffset;
             holder.dateView.setText(dateTimeWithSeparator);
