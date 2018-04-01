@@ -8,27 +8,27 @@ public class News {
     /**
      * News title
      */
-    private String mTitle;
+    private final String mTitle;
 
     /**
      * News section
      */
-    private String mSection;
+    private final String mSection;
 
     /**
      * News author
      */
-    private String mAuthor;
+    private final String mAuthor;
 
     /**
      * News date
      */
-    private String mDate;
+    private final String mDate;
 
     /**
      * Website URL of the news
      */
-    private String mUrl;
+    private final String mUrl;
 
     /**
      * Constructs a new {@link News} object.

@@ -27,6 +27,13 @@ public final class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
+     *  Key values for JSON request,
+     */
+    private static final String RESPONSE = "response";
+    private static final String RESULTS= "results";
+    private static final String FIELDS= "fields";
+
+    /**
      * Create a private constructor - class where we can hold static variables and methods.
      * They may be accessed directly from the class name QueryUtils.
      */
@@ -149,7 +156,7 @@ public final class QueryUtils {
             JSONObject guardianJsonResponse = new JSONObject(newsJSON);
 
             // Extract the JSONArray "results" which is within the JSONObject "response"
-            JSONArray newsArray = guardianJsonResponse.getJSONObject("response").getJSONArray("results");
+            JSONArray newsArray = guardianJsonResponse.getJSONObject(RESPONSE).getJSONArray(RESULTS);
 
             // For each News in the NewsArray, create a News object
             for (int i = 0; i < newsArray.length(); i++) {
@@ -166,7 +173,7 @@ public final class QueryUtils {
                 // Extract the name of the author
                 String author = "";
                 // News may not have additional fields - checking
-                if (currentNews.has("fields")) {
+                if (currentNews.has(FIELDS)) {
                     JSONObject myObject = currentNews.getJSONObject("fields");
                     // Extract the author of the current news
                     author = myObject.getString("byline");
