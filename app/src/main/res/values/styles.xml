@@ -35,4 +35,13 @@
         <item name="android:paddingBottom">@dimen/small_padding</item>
         <item name="android:textStyle">italic</item>
     </style>
+
+    <style name="FloatingActionButtonStyle">
+               <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_marginBottom">@dimen/fab_margin</item>
+        <item name="android:layout_marginEnd">@dimen/fab_margin</item>
+    </style>
 </resources>

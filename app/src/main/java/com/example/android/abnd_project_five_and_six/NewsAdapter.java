@@ -1,7 +1,6 @@
 package com.example.android.abnd_project_five_and_six;
 
 import android.content.Context;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
