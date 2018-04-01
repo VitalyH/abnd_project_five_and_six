@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,6 +31,15 @@ public class NewsAdapter extends ArrayAdapter<News> {
         super(context, 0, news);
     }
 
+    // Initialize ViewHolder as a cache mechanism
+    // for storing Views
+    public static class ViewHolder {
+        TextView sectionView;
+        TextView titleView;
+        TextView authorView;
+        TextView dateView;
+    }
+
     /**
      * Returns a list item view that displays information about the news at the given position in the list
      */
@@ -45,22 +56,22 @@ public class NewsAdapter extends ArrayAdapter<News> {
         // Find the news piece at the given position in the list of news
         News currentNews = getItem(position);
 
-        // Find the TextView with view ID news_section
-        TextView sectionView = listItemView.findViewById(R.id.news_section);
+        // Create new ViewHolder for text views.
+        ViewHolder holder = new ViewHolder();
+
         // Display the section of the current news in that TextView
-        sectionView.setText(currentNews.getNewsSection());
+        holder.sectionView = listItemView.findViewById(R.id.news_section);
+        holder.sectionView.setText(currentNews.getNewsSection());
 
-        // Find the TextView with view ID news_title
-        TextView titleView = listItemView.findViewById(R.id.news_title);
         // Display the title of the current news in that TextView
-        titleView.setText(currentNews.getNewsTitle());
+        holder.titleView = listItemView.findViewById(R.id.news_title);
+        holder.titleView.setText(currentNews.getNewsTitle());
 
-        // Find the TextView with view ID news_author
-        TextView authorView = listItemView.findViewById(R.id.news_author);
         // Display the author of the news in that TextView
-        authorView.setText(currentNews.getNewsAuthor());
+        holder.authorView = listItemView.findViewById(R.id.news_author);
+        holder.authorView.setText(currentNews.getNewsAuthor());
 
-        // Handle the date
+        // Variables for the date conversion
         String originalDate = currentNews.getNewsDate();
         String dateOffset = "";
         String dateLeftover;
@@ -79,10 +90,10 @@ public class NewsAdapter extends ArrayAdapter<News> {
         }
 
         // Find the TextView with view ID location
-        TextView dateView = listItemView.findViewById(R.id.news_date);
+        holder.dateView = listItemView.findViewById(R.id.news_date);
         // Display the date and time and "," between them
         String dateTimeWithSeparator = dateOffset + getContext().getString(R.string.date_time_separator) + timeOffset;
-        dateView.setText(dateTimeWithSeparator);
+        holder.dateView.setText(dateTimeWithSeparator);
 
         return listItemView;
     }
