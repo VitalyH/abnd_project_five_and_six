@@ -8,11 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="NewsListTopViews">
-        <item name="android:paddingStart">@dimen/small_padding</item>
-        <item name="android:paddingEnd">@dimen/small_padding</item>
-        <item name="android:paddingTop">@dimen/small_padding</item>
+    <style name="CustomStyleWithCommonProperties">
         <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:paddingStart">@dimen/small_padding</item>
+        <item name="android:paddingEnd">@dimen/extra_small_padding</item>
+    </style>
+
+    <style name="NewsListTopViews" parent="CustomStyleWithCommonProperties">
+        <item name="android:paddingTop">@dimen/small_padding</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
@@ -22,11 +25,8 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="NewsListAuthorTag">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:paddingStart">@dimen/small_padding</item>
+    <style name="NewsListAuthorTag" parent="CustomStyleWithCommonProperties">
         <item name="android:paddingBottom">@dimen/small_padding</item>
-        <item name="android:paddingEnd">@dimen/extra_small_padding</item>
         <item name="android:textStyle">italic</item>
     </style>
 
@@ -37,7 +37,7 @@
     </style>
 
     <style name="FloatingActionButtonStyle">
-               <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentEnd">true</item>

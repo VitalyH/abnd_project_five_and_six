@@ -3,6 +3,7 @@
     android:id="@+id/list_item_text_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:minHeight="@dimen/list_item_height">
 
     <!-- Section name, top left corner -->
@@ -36,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/news_title"
-        android:text="@string/news_list_author_tag" />
+        tools:text="@string/news_list_author_tag" />
 
     <!-- Name of the author-->
     <TextView

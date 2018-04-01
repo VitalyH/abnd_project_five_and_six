@@ -4,6 +4,8 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.support.design.widget.FloatingActionButton;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +77,20 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                     // Create a new intent to view the news URI
                     Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
 
-                    // Send the intent to launch a new activity
-                    startActivity(websiteIntent);
+                    // Check whatever is an activity available that can respond to the intent
+                    PackageManager packageManager = getPackageManager();
+                    List<ResolveInfo> activities = packageManager.queryIntentActivities(websiteIntent,
+                            PackageManager.MATCH_DEFAULT_ONLY);
+                    boolean isIntentSafe = activities.size() > 0;
+
+                    if (isIntentSafe) {
+                        // Send the intent to launch a new activity
+                        startActivity(websiteIntent);
+                    } else {
+                        // If there is no web-browser
+                        // Show Toast message with warning
+                        Toast.makeText(getApplicationContext(), getString(R.string.no_browser), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
