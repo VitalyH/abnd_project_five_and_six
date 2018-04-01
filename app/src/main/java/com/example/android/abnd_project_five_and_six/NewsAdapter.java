@@ -1,12 +1,11 @@
 package com.example.android.abnd_project_five_and_six;
 
 import android.content.Context;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,6 +23,7 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
     /**
      * Constructs a new {@link NewsAdapter}.
+     *
      * @param context of the app
      * @param news    is the list of news, which is the data source of the adapter
      */
@@ -59,42 +59,43 @@ public class NewsAdapter extends ArrayAdapter<News> {
         // Create new ViewHolder for text views.
         ViewHolder holder = new ViewHolder();
 
-        // Display the section of the current news in that TextView
-        holder.sectionView = listItemView.findViewById(R.id.news_section);
-        holder.sectionView.setText(currentNews.getNewsSection());
+        if (currentNews != null) {
+            // Display the section of the current news in that TextView
+            holder.sectionView = listItemView.findViewById(R.id.news_section);
+            holder.sectionView.setText(currentNews.getNewsSection());
 
-        // Display the title of the current news in that TextView
-        holder.titleView = listItemView.findViewById(R.id.news_title);
-        holder.titleView.setText(currentNews.getNewsTitle());
+            // Display the title of the current news in that TextView
+            holder.titleView = listItemView.findViewById(R.id.news_title);
+            holder.titleView.setText(currentNews.getNewsTitle());
 
-        // Display the author of the news in that TextView
-        holder.authorView = listItemView.findViewById(R.id.news_author);
-        holder.authorView.setText(currentNews.getNewsAuthor());
+            // Display the author of the news in that TextView
+            holder.authorView = listItemView.findViewById(R.id.news_author);
+            holder.authorView.setText(currentNews.getNewsAuthor());
 
-        // Variables for the date conversion
-        String originalDate = currentNews.getNewsDate();
-        String dateOffset = "";
-        String dateLeftover;
-        String timeOffset = "";
+            // Variables for the date conversion
+            String originalDate = currentNews.getNewsDate();
+            String dateOffset = "";
+            String dateLeftover;
+            String timeOffset = "";
 
-        if (originalDate.contains(DATE_SEPARATOR)) {
-            // Split the string into different parts (as an array of Strings)
-            // based on the "T" text. We expect an array of 2 Strings, where
-            // the first String will be "date" and the second String will be "time".
-            String[] date = originalDate.split(DATE_SEPARATOR);
-            dateOffset = date[0];
-            dateLeftover = date[1];
-            // Do the same with "leftover" of date, which contains time and separator "Z"
-            String[] time = dateLeftover.split(TIME_SEPARATOR);
-            timeOffset = time[0];
+            if (originalDate.contains(DATE_SEPARATOR)) {
+                // Split the string into different parts (as an array of Strings)
+                // based on the "T" text. We expect an array of 2 Strings, where
+                // the first String will be "date" and the second String will be "time".
+                String[] date = originalDate.split(DATE_SEPARATOR);
+                dateOffset = date[0];
+                dateLeftover = date[1];
+                // Do the same with "leftover" of date, which contains time and separator "Z"
+                String[] time = dateLeftover.split(TIME_SEPARATOR);
+                timeOffset = time[0];
+            }
+
+            // Find the TextView with view ID location
+            holder.dateView = listItemView.findViewById(R.id.news_date);
+            // Display the date and time and "," between them
+            String dateTimeWithSeparator = dateOffset + getContext().getString(R.string.date_time_separator) + timeOffset;
+            holder.dateView.setText(dateTimeWithSeparator);
         }
-
-        // Find the TextView with view ID location
-        holder.dateView = listItemView.findViewById(R.id.news_date);
-        // Display the date and time and "," between them
-        String dateTimeWithSeparator = dateOffset + getContext().getString(R.string.date_time_separator) + timeOffset;
-        holder.dateView.setText(dateTimeWithSeparator);
-
         return listItemView;
     }
 }

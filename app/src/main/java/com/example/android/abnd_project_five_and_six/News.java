@@ -44,7 +44,7 @@ public class News {
         mTitle = title;
         mAuthor = author;
         mDate = date;
-           mUrl = url;
+        mUrl = url;
     }
 
     /**

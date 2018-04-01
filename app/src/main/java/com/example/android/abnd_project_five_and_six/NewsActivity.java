@@ -71,13 +71,15 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                 News currentNews = mAdapter.getItem(position);
 
                 // Convert the String URL into a URI object.
-                Uri newsUri = Uri.parse(currentNews.getUrl());
+                if (currentNews != null) {
+                    Uri newsUri = Uri.parse(currentNews.getUrl());
 
-                // Create a new intent to view the news URI
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
+                    // Create a new intent to view the news URI
+                    Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newsUri);
 
-                // Send the intent to launch a new activity
-                startActivity(websiteIntent);
+                    // Send the intent to launch a new activity
+                    startActivity(websiteIntent);
+                }
             }
         });
 
@@ -86,22 +88,31 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
                 getSystemService(Context.CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default data network
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        // Prevent null pointer exception in getActiveNetworkInfo()
+        if (connMgr != null) {
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        // If there is a network connection, fetch data
-        if (networkInfo != null && networkInfo.isConnected()) {
-            // Get a reference to the LoaderManager, in order to interact with loaders.
-            LoaderManager loaderManager = getLoaderManager();
+            // If there is a network connection, fetch data
+            if (networkInfo != null && networkInfo.isConnected()) {
+                // Get a reference to the LoaderManager, in order to interact with loaders.
+                LoaderManager loaderManager = getLoaderManager();
 
-            // Initialize the loader.
-            loaderManager.initLoader(NEWS_LOADER_ID, null, this);
+                // Initialize the loader.
+                loaderManager.initLoader(NEWS_LOADER_ID, null, this);
+
+            } else {
+                // Otherwise, display error
+                // Hide loading indicator so error message will be visible
+                View loadingIndicator = findViewById(R.id.loading_indicator);
+                loadingIndicator.setVisibility(View.GONE);
+
+                // Update empty state with no connection error message
+                mEmptyStateTextView.setText(R.string.no_internet_connection);
+            }
         } else {
-            // Otherwise, display error
-            // Hide loading indicator so error message will be visible
+            // Otherwise, display error with no connection error message
             View loadingIndicator = findViewById(R.id.loading_indicator);
             loadingIndicator.setVisibility(View.GONE);
-
-            // Update empty state with no connection error message
             mEmptyStateTextView.setText(R.string.no_internet_connection);
         }
     }
