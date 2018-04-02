@@ -4,14 +4,19 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -25,10 +30,21 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
     /**
      * URL for news data from the The Guardian.
-     * All additional queries are in the onCreateLoader method.
      */
     private static final String GUARDIAN_REQUEST_URL =
             "https://content.guardianapis.com/search?q";
+
+    /**
+     * Additional queries for The Guardian API
+     * and their values (except ones which defined in Settings)
+     */
+
+    private static final String API_KEY = "api-key";
+    private static final String API_KEY_VALUE = "180f2602-4726-43d6-bf1e-55256d6ccbc8";
+    private static final String SHOW_FIELDS = "show-fields";
+    private static final String SHOW_FIELDS_VALUE = "byline";
+    private static final String ORDER_BY = "order-by";
+    private static final String PAGE_SIZE = "page-size";
 
     /**
      * Constant value for the news loader ID.
@@ -145,14 +161,29 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // getString retrieves a String value from the preferences
+        // The second parameter is the default value
+        // This one for order of displaying News
+        String orderByValue = sharedPreferences.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default));
+
+
+        // This one for number of stories
+        String pageSizeValue = sharedPreferences.getString(
+                getString(R.string.settings_news_number_key),
+                getString(R.string.settings_min_news_number_default));
+
         Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         // Additional query parameters.
-        // May allow users to customize them via Settings in the next task
-        uriBuilder.appendQueryParameter("api-key", "180f2602-4726-43d6-bf1e-55256d6ccbc8");
-        uriBuilder.appendQueryParameter("order-by", "newest");
-        uriBuilder.appendQueryParameter("show-fields", "byline");
-        uriBuilder.appendQueryParameter("page-size", "20");
+        // Allow users to customize them via Settings
+        uriBuilder.appendQueryParameter(API_KEY, API_KEY_VALUE);
+        uriBuilder.appendQueryParameter(SHOW_FIELDS, SHOW_FIELDS_VALUE);
+        uriBuilder.appendQueryParameter(ORDER_BY, orderByValue);
+        uriBuilder.appendQueryParameter(PAGE_SIZE, pageSizeValue);
         return new NewsLoader(this, uriBuilder.toString());
     }
 
@@ -180,5 +211,22 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter.clear();
     }
 
+    @Override
+    // This method initialize the contents of the Activity's options menu.
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the Options Menu we specified in XML
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
